@@ -33,5 +33,5 @@ If you want to contribute to the project, for instance by fixing a bug or adding
 
 ## License
 
-- The code and the Godot project are shared under the `GPL-v3.0-or-later` license.
+- The code and the Godot project are shared under the `MIT` license.
 - All assets are shared under the `Creative Commons By-NC-SA 4.0` license.
