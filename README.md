@@ -4,7 +4,7 @@ RatFitti is a 2D platformer game made with the [Godot](https://godotengine.org/ 
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine. You can download a windows version of the game or run a web version from [here](https://liulalem.itch.io/cassette-boy-adventures).
+These instructions will get you a copy of the project up and running on your local machine. You can download a windows version of the game or run a web version from [here](link aqui).
 
 ### Prerequisites
 
