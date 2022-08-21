@@ -20,10 +20,10 @@ func _handle_pause_song():
 
 
 #==== BUTTONS ====
-func _on_Button_button_down():
+func _on_ContinueButton_pressed():
 	_handle_pause()
 	
-func _on_Sound_button_down():
+func _on_SoundButton_pressed():
 	_change_volume()
 	
 
@@ -32,9 +32,3 @@ func _on_Sound_button_down():
 func _change_volume():
 	var music_bus = AudioServer.get_bus_index("Master")
 	AudioServer.set_bus_mute(music_bus, not AudioServer.is_bus_mute(music_bus))
-	print("entrou no audio")
-
-
-
-func _on_PlayButton_pressed():
-	_handle_pause()

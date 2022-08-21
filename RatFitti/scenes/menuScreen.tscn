@@ -24,19 +24,19 @@
 [ext_resource path="res://scripts/menuScreen.gd" type="Script" id=22]
 [ext_resource path="res://scenes/MusicController.tscn" type="PackedScene" id=23]
 
-[sub_resource type="StyleBoxFlat" id=3]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
-[sub_resource type="StyleBoxFlat" id=1]
+[sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
-[sub_resource type="StyleBoxFlat" id=4]
+[sub_resource type="StyleBoxFlat" id=8]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [sub_resource type="Theme" id=2]
-Button/styles/hover = SubResource( 3 )
-Button/styles/normal = SubResource( 1 )
-Button/styles/pressed = SubResource( 4 )
+Button/styles/hover = SubResource( 6 )
+Button/styles/normal = SubResource( 7 )
+Button/styles/pressed = SubResource( 8 )
 
 [sub_resource type="GDScript" id=5]
 
