@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/pauseSong.mp3-67df62c05bd1c2aa097543772fa79fc0.mp3str"
+
+[deps]
+
+source_file="res://Audio/pauseSong.mp3"
+dest_files=[ "res://.import/pauseSong.mp3-67df62c05bd1c2aa097543772fa79fc0.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
