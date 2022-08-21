@@ -1,33 +1,67 @@
 extends KinematicBody2D
 
-var velocity = Vector2.ZERO
-var speed = 280
-var gravity = 1200
-var jump_force = -750
-var is_grounded
 onready var raycasts = $raycasts
 onready var animate = $anim
 
-func _physics_process(delta: float) -> void:
-	velocity.y += gravity * delta
-	
+export var is_grounded = true
+
+var motion = Vector2.ZERO
+var x_input
+
+func _physics_process(delta):
+	print(PlayerVariables.jetpack_fuel)
 	_get_input()
-	_set_animation()
-	move_and_slide(velocity)
+	_handle_facing()
+	if x_input != 0:
+		_apply_movement(delta)
+		
+	_apply_gravity(delta)
+	_handle_friction(delta)			
 	
 	is_grounded = _check_is_ground()
+	
+	if Input.is_action_just_pressed("ui_up"):
+		_jump()
+	
+	if Input.is_action_pressed("jetpack_up") && PlayerVariables.jetpack_fuel > 0:
+		_jetpack()
+	
+	_set_animation()
+		
+	if !is_grounded:
+		if Input.is_action_just_released("ui_up") and motion.y < -(PlayerVariables.JUMP_FORCE/2):
+			motion.y = -(PlayerVariables.JUMP_FORCE/2)
+			
+	
+	motion = move_and_slide(motion, Vector2.UP)
+	
 
 func _get_input():
-	var move_direction = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
-	velocity.x = lerp(velocity.x, (move_direction * speed), 0.2)
-	
-	if move_direction != 0:
-		$texture.scale.x = move_direction
+	x_input = int(Input.is_action_pressed("move_right")) - int(Input.is_action_pressed("move_left"))
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("jump") && is_grounded:
-			velocity.y = jump_force / 2
+func _apply_movement(delta):
+	motion.x += x_input * PlayerVariables.ACCELERATION * delta * PlayerVariables.TARGET_FPS
+	motion.x = clamp(motion.x, -(PlayerVariables.MAX_SPEED), PlayerVariables.MAX_SPEED)
 	
+func _apply_gravity(delta):
+	motion.y += PlayerVariables.GRAVITY * delta * PlayerVariables.TARGET_FPS
+
+func _handle_friction(delta):
+	if abs(x_input) < 0.01:
+		if is_grounded: #friction
+			motion.x = lerp(motion.x, 0, PlayerVariables.FRICTION * delta)
+		elif !is_grounded: #air resistance
+			motion.x = lerp(motion.x, 0, PlayerVariables.AIR_RESISTANCE * delta)
+		
+func  _jump():
+	if is_grounded:
+		motion.y = -(PlayerVariables.JUMP_FORCE)
+
+func _jetpack():
+	if !is_grounded:
+		motion.y -= PlayerVariables.JETPACK_SPEED
+		PlayerVariables.jetpack_fuel -= 0.16
+		
 func _check_is_ground():
 	for raycast in raycasts.get_children():
 		if raycast.is_colliding():
@@ -36,12 +70,19 @@ func _check_is_ground():
 	return false
 
 func _set_animation():
-	var anima = "idle"
+	var anima = "Idle"
 	
-	if !is_grounded:
-		anima = "jump"
-	elif velocity.x != 0:
-		anima = "running"
+	if !is_grounded && Input.is_action_just_pressed("ui_up"):
+		anima = "Jump"
+	elif !is_grounded:
+		anima = "Fall"
+		
+	if x_input != 0:
+		anima = "Walking"
 	
 	if animate.assigned_animation != anima:
 		animate.play(anima)
+
+func _handle_facing():
+	if abs(x_input) > 0.01:
+		$texture.scale.x = x_input
