@@ -6,7 +6,8 @@
 [ext_resource path="res://Ratfitti/Fall.png" type="Texture" id=4]
 [ext_resource path="res://Ratfitti/ratsheet.png" type="Texture" id=6]
 
-[sub_resource type="CapsuleShape2D" id=7]
+[sub_resource type="RectangleShape2D" id=13]
+extents = Vector2( 8.61508, 16.0741 )
 
 [sub_resource type="Animation" id=12]
 resource_name = "Fall"
@@ -281,9 +282,9 @@ hframes = 3
 vframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 5, 6 )
+position = Vector2( 5.95773, 6.5 )
 scale = Vector2( 0.691548, 0.466589 )
-shape = SubResource( 7 )
+shape = SubResource( 13 )
 
 [node name="anim" type="AnimationPlayer" parent="."]
 anims/Fall = SubResource( 12 )
@@ -306,3 +307,9 @@ position = Vector2( 8, 9 )
 enabled = true
 cast_to = Vector2( 0, 9 )
 collision_mask = 8
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="timeout" from="CoyoteTimer" to="." method="_on_CoyoteTime_timeout"]
