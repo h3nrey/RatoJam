@@ -1329,7 +1329,13 @@ texture_hover = ExtResource( 11 )
 
 [node name="Pause" parent="." instance=ExtResource( 5 )]
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Cronometro" type="Label" parent="."]
+visible = false
+margin_left = 126.0
+margin_top = -141.0
+margin_right = 174.0
+margin_bottom = -127.0
+text = "Tempo:"
 
 [connection signal="body_entered" from="Espinhos" to="Espinhos" method="_on_Espinhos_body_entered"]
 [connection signal="body_entered" from="Win" to="." method="_on_Win_body_entered"]
