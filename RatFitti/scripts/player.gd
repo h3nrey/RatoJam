@@ -5,6 +5,7 @@ onready var animate = $anim
 export var is_grounded = true
 var motion = Vector2.ZERO
 var x_input
+var last_input = 1
 
 func _ready():
 	$Jetpack_particles_left/Particles2D.emitting = false
@@ -15,6 +16,10 @@ func _physics_process(delta):
 		$Jetpack_particles_left/Particles2D.emitting = false
 		$Jetpack_particles_right/Particles2D.emitting = false
 	_get_input()
+	if x_input != 0:
+		last_input = x_input
+	
+	
 	_handle_facing()
 	if x_input != 0:
 		_apply_movement(delta)
@@ -24,7 +29,7 @@ func _physics_process(delta):
 	
 	is_grounded = _check_is_ground()
 	
-	if Input.is_action_just_pressed("ui_up"):
+	if Input.is_action_just_pressed("jump"):
 		_jump()
 	
 	if is_grounded:
@@ -37,7 +42,7 @@ func _physics_process(delta):
 	_set_animation()
 		
 	if !is_grounded:
-		if Input.is_action_just_released("ui_up") and motion.y < -(PlayerVariables.JUMP_FORCE/2):
+		if Input.is_action_just_released("jump") and motion.y < -(PlayerVariables.JUMP_FORCE/2):
 			motion.y = -(PlayerVariables.JUMP_FORCE/2)
 		_reset_coyote_time()
 #		$CoyoteTimer.start()
@@ -110,11 +115,12 @@ func _handle_facing():
 		$texture.scale.x = x_input * 0.065
 		
 func _handle_particles_facing():
-	if x_input < 0 || Input.is_action_just_released("move_left"):
-		$Jetpack_particles_right/Particles2D.emitting = true
-		$Jetpack_particles_left/Particles2D.emitting = false
-		
-	elif x_input > 0 || Input.is_action_just_released("move_right"):
-		$Jetpack_particles_left/Particles2D.emitting = true
-		$Jetpack_particles_right/Particles2D.emitting = false
+	if !is_grounded:
+		if last_input < 0 || Input.is_action_just_released("move_left"):
+			$Jetpack_particles_right/Particles2D.emitting = true
+			$Jetpack_particles_left/Particles2D.emitting = false
+			
+		elif last_input > 0 || Input.is_action_just_released("move_right"):
+			$Jetpack_particles_left/Particles2D.emitting = true
+			$Jetpack_particles_right/Particles2D.emitting = false
 

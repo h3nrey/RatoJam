@@ -17,6 +17,7 @@ config/icon="res://icon.png"
 [autoload]
 
 PlayerVariables="*res://scenes/PlayerVariables.tscn"
+MusicController="*res://scenes/MusicController.tscn"
 
 [display]
 
