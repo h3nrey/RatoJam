@@ -3,11 +3,6 @@ var muted = false
 
 func _ready():
 	$Panel.visible = false
-
-
-func _process(delta):
-	if Input.is_action_just_pressed("pause"):
-		_handle_pause()
 		
 func _handle_pause():
 	$Panel.visible = !$Panel.visible
@@ -26,3 +21,7 @@ func _change_volume():
 	muted = !muted
 	print("entrou no audio")
 
+
+
+func _on_PlayButton_pressed():
+	_handle_pause()

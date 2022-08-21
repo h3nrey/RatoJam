@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/MENU_DEFINITIVO_MEU_DEUS_DO_CEU_E_VOU_MORRER23.mp3-d5bd61888d5afa7ea54ed9153ba49ede.mp3str"
+
+[deps]
+
+source_file="res://Ratfitti/Menu/MENU_DEFINITIVO_MEU_DEUS_DO_CEU_E_VOU_MORRER23.mp3"
+dest_files=[ "res://.import/MENU_DEFINITIVO_MEU_DEUS_DO_CEU_E_VOU_MORRER23.mp3-d5bd61888d5afa7ea54ed9153ba49ede.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

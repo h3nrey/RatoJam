@@ -2,15 +2,18 @@ extends KinematicBody2D
 
 onready var raycasts = $raycasts
 onready var animate = $anim
-
 export var is_grounded = true
-
 var motion = Vector2.ZERO
 var x_input
 
-func _physics_process(delta):
+func _ready():
 	$Jetpack_particles_left/Particles2D.emitting = false
 	$Jetpack_particles_right/Particles2D.emitting = false
+
+func _physics_process(delta):
+	if Input.is_action_just_released("jetpack_up"):
+		$Jetpack_particles_left/Particles2D.emitting = false
+		$Jetpack_particles_right/Particles2D.emitting = false
 	_get_input()
 	_handle_facing()
 	if x_input != 0:
@@ -29,6 +32,7 @@ func _physics_process(delta):
 	
 	if Input.is_action_pressed("jetpack_up") && PlayerVariables.jetpack_fuel > 0:
 		_jetpack()
+		_handle_particles_facing()
 	
 	_set_animation()
 		
@@ -80,7 +84,6 @@ func _jetpack():
 	if !is_grounded:
 		motion.y -= PlayerVariables.JETPACK_SPEED
 		PlayerVariables.jetpack_fuel -= 0.16
-		_handle_particles_facing()
 		
 func _check_is_ground():
 	for raycast in raycasts.get_children():
@@ -108,11 +111,11 @@ func _handle_facing():
 		$texture.scale.x = x_input * 0.065
 		
 func _handle_particles_facing():
-	if x_input < 0:
+	if x_input < 0 || Input.is_action_just_released("move_left"):
 		$Jetpack_particles_right/Particles2D.emitting = true
 		$Jetpack_particles_left/Particles2D.emitting = false
 		
-	elif x_input > 0:
+	elif x_input > 0 || Input.is_action_just_released("move_right"):
 		$Jetpack_particles_left/Particles2D.emitting = true
 		$Jetpack_particles_right/Particles2D.emitting = false
 
