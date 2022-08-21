@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Barra 20_.png-9b305818eeef8b759b0daf7b1e33ca5a.stex"
+path="res://.import/Barra100_.png-5e27e9f110a9155e5a938712aeabe6ed.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://UI/Barra 20_.png"
-dest_files=[ "res://.import/Barra 20_.png-9b305818eeef8b759b0daf7b1e33ca5a.stex" ]
+source_file="res://UI/Barra100_.png"
+dest_files=[ "res://.import/Barra100_.png-5e27e9f110a9155e5a938712aeabe6ed.stex" ]
 
 [params]
 
