@@ -9,7 +9,8 @@ var motion = Vector2.ZERO
 var x_input
 
 func _physics_process(delta):
-	print(PlayerVariables.jetpack_fuel)
+	$Jetpack_particles_left/Particles2D.emitting = false
+	$Jetpack_particles_right/Particles2D.emitting = false
 	_get_input()
 	_handle_facing()
 	if x_input != 0:
@@ -79,6 +80,7 @@ func _jetpack():
 	if !is_grounded:
 		motion.y -= PlayerVariables.JETPACK_SPEED
 		PlayerVariables.jetpack_fuel -= 0.16
+		_handle_particles_facing()
 		
 func _check_is_ground():
 	for raycast in raycasts.get_children():
@@ -90,12 +92,12 @@ func _check_is_ground():
 func _set_animation():
 	var anima = "Idle"
 	
-	if !is_grounded && Input.is_action_just_pressed("ui_up"):
+	if !is_grounded && motion.y < 0:
 		anima = "Jump"
-	elif !is_grounded:
+	elif !is_grounded || Input.is_action_just_released("jetpack_up"):
 		anima = "Fall"
 		
-	if x_input != 0:
+	if x_input != 0 && is_grounded:
 		anima = "Walking"
 	
 	if animate.assigned_animation != anima:
@@ -104,5 +106,13 @@ func _set_animation():
 func _handle_facing():
 	if abs(x_input) > 0.01:
 		$texture.scale.x = x_input * 0.065
-
+		
+func _handle_particles_facing():
+	if x_input < 0:
+		$Jetpack_particles_right/Particles2D.emitting = true
+		$Jetpack_particles_left/Particles2D.emitting = false
+		
+	elif x_input > 0:
+		$Jetpack_particles_left/Particles2D.emitting = true
+		$Jetpack_particles_right/Particles2D.emitting = false
 

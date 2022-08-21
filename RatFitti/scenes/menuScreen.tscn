@@ -1,0 +1,13 @@
+[gd_scene format=2]
+
+[node name="menuScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="controls" type="VBoxContainer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="startButton" type="Button" parent="controls"]
+margin_right = 40.0
+margin_bottom = 20.0
