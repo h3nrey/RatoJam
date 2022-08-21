@@ -76,7 +76,6 @@ func  _jump():
 
 func _reset_coyote_time():
 	yield(get_tree().create_timer(PlayerVariables.coyote_timer), "timeout")
-	print("Test")
 	PlayerVariables.coyote_time = false
 	
 #===== JETPACK =====

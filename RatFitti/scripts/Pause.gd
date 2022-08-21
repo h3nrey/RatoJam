@@ -1,12 +1,23 @@
 extends Node
 var muted = false
+var paused
 
 func _ready():
 	$Panel.visible = false
 		
 func _handle_pause():
+	_handle_pause_song()
+		
 	$Panel.visible = !$Panel.visible
 	get_tree().paused = !get_tree().paused
+
+func _handle_pause_song():
+	if !paused:
+		$Panel/Song.play()
+	else:
+		$Panel/Song.stop()
+	
+
 
 #==== BUTTONS ====
 func _on_Button_button_down():
@@ -14,11 +25,13 @@ func _on_Button_button_down():
 	
 func _on_Sound_button_down():
 	_change_volume()
+	
+
 
 #==== AUDIO ====
 func _change_volume():
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), 0)
-	muted = !muted
+	var music_bus = AudioServer.get_bus_index("Master")
+	AudioServer.set_bus_mute(music_bus, not AudioServer.is_bus_mute(music_bus))
 	print("entrou no audio")
 
 
