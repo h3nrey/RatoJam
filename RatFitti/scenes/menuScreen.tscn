@@ -188,5 +188,6 @@ texture_hover = ExtResource( 21 )
 
 [node name="MusicController" parent="." instance=ExtResource( 23 )]
 
+[connection signal="pressed" from="PlayContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="button_down" from="SoundContainer/SoundButton" to="." method="_on_SoundButton_button_down"]
 [connection signal="pressed" from="HelpContainer/HelpButton" to="." method="_on_HelpButton_pressed"]

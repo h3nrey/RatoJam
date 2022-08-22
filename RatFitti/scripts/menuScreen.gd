@@ -9,3 +9,7 @@ func _on_HelpButton_pressed() -> void:
 func _on_SoundButton_button_down():
 	var music_bus = AudioServer.get_bus_index("Master")
 	AudioServer.set_bus_mute(music_bus, not AudioServer.is_bus_mute(music_bus))
+
+
+func _on_PlayButton_pressed():
+	get_tree().change_scene("res://scenes/default.tscn")
