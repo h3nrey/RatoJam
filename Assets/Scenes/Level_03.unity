@@ -188,6 +188,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2633418011924196037, guid: 71fc1047833a5494f97f835f54d9c93b, type: 3}
+      propertyPath: sprayForce
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2633418011924196037, guid: 71fc1047833a5494f97f835f54d9c93b, type: 3}
+      propertyPath: airResistance
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2633418011924196037, guid: 71fc1047833a5494f97f835f54d9c93b, type: 3}
       propertyPath: playerCollider
       value: 
       objectReference: {fileID: 860537255}

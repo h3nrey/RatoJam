@@ -4,29 +4,35 @@ using UnityEngine;
 
 public class SplatterController : MonoBehaviour
 {
-    private ParticleSystem particles => PlayerBehaviour.Player.particles;
+    GameObject splatPrefab => PlayerBehaviour.Player.splatPrefab;
+    Color[] colors => PlayerBehaviour.Player.colors;
+    private int splatLayer;
 
-    [Header("Splatter Effect")]
-    [SerializeField] private GameObject splatPrefab;
-    [SerializeField] Transform splatHolder;
-    [SerializeField] Color[] colors;
-    private List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
+    private bool canPlaceSplat;
 
-    private void OnParticleCollision(GameObject other) {
-        print("Particula colidiu");
-        ParticlePhysicsExtensions.GetCollisionEvents(particles, other, collisionEvents);
+    private void Update() {
+        if(PlayerBehaviour.Player.canUseSpray) {
+            CreateSplat();
+        }
+    }
+    public void CreateSplat() {
+        Vector3 randomRot = new Vector3(0f,0f,Random.Range(0f, 360f));
+        GameObject splat = Instantiate(splatPrefab, transform.position, Quaternion.Euler(randomRot));
+        splat.GetComponent<SpriteRenderer>().color = colors[Random.Range(0, colors.Length)];
 
-        int count = collisionEvents.Count;
-        print(count);
+        splatLayer++;
+        splat.GetComponent<SpriteRenderer>().sortingOrder = splatLayer;
+    }
 
-        if(count <= 10) {
-            for (int i = 0; i < count; i++) {
-                int randomColorIndex = Random.Range(0, colors.Length);
-                GameObject splat = Instantiate(splatPrefab, collisionEvents[i].intersection, Quaternion.Euler(0.0f, 0.0f, Random.Range(0.0f, 360.0f)), splatHolder);
-                if(splat.GetComponent<SpriteRenderer>().color == Color.white)
-                    splat.GetComponent<SpriteRenderer>().color = colors[randomColorIndex];
-            }
+    private void OnTriggerEnter2D(Collider2D other) {
+        if(other.tag == "ground") {
+            canPlaceSplat = true;
+        }
+    }
 
+    private void OnTriggerExit2D(Collider2D other) {
+        if (other.tag == "ground") {
+            canPlaceSplat = false;
         }
     }
 }

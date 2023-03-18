@@ -1,5 +1,66 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1907165503
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1907165504}
+  - component: {fileID: 1907165505}
+  - component: {fileID: 1907165506}
+  m_Layer: 0
+  m_Name: splatLauncher
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1907165504
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907165503}
+  m_LocalRotation: {x: 0, y: 0, z: 0.9636072, w: 0.2673225}
+  m_LocalPosition: {x: -0.408, y: -0.579, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2633418011924196039}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 148.99}
+--- !u!58 &1907165505
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907165503}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.23
+--- !u!114 &1907165506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907165503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aa96288bb14d1447b214b75d3b6dd1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2119381824
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,6 +242,7 @@ Transform:
   - {fileID: 2633418011806850675}
   - {fileID: 2633418012150981054}
   - {fileID: 2119381825}
+  - {fileID: 1907165504}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -196,19 +258,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d14eb020b4450fb48bc37b5d8920be56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  acceleration: 7
+  moveSpeed: 300
+  acceleration: 9
   decceleration: 7
   velPower: 0.9
   vel: {x: 0, y: 0}
   frictionAmount: 0.2
-  airResistance: 0.3
+  airResistance: 0.2
   groundPoint: {fileID: 2633418011806850675}
   groundRadius: 0.1
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  jumpForce: 6
+  jumpForce: 300
   jumpCutMultiplier: 0.5
   coyoteTimeCounter: 0
   coyoteTime: 0.1
@@ -221,12 +283,24 @@ MonoBehaviour:
   sprayFallingForce: 300
   sprayAmountUsed: 2
   canUseSpray: 0
+  splatCreaterList: []
+  splatPrefab: {fileID: 4776127576020240382, guid: 092f710e2fab9364a9187cd0b5a67f6b, type: 3}
+  splatHolder: {fileID: 0}
+  colors:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0.32871437, g: 1, b: 0, a: 1}
+  - {r: 0, g: 0.3245139, b: 1, a: 1}
+  - {r: 0.9858012, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0.629899, a: 1}
+  cheeseCount: 0
   isGrounded: 1
   checkPoint: {fileID: 0}
   rb: {fileID: 0}
   anim: {fileID: 2633418011924196091}
   particles: {fileID: 2633418012150981052}
+  playerCollider: {fileID: 0}
   _sprayController: {fileID: 2633418011924196036}
+  _collisionController: {fileID: 2633418011924196035}
 --- !u!114 &2633418011924196036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,6 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a8dd496a8352a9479914d5bac6b0676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentOneWayPlataform: {fileID: 0}
 --- !u!114 &2633418011924196038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -555,7 +630,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.6
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5258,16 +5333,8 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2633418012150981055}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9aa96288bb14d1447b214b75d3b6dd1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  splatPrefab: {fileID: 4776127576020240382, guid: 092f710e2fab9364a9187cd0b5a67f6b, type: 3}
-  splatHolder: {fileID: 0}
-  colors:
-  - {r: 1, g: 0, b: 0.6859312, a: 0.7882353}
-  - {r: 1, g: 0.8795767, b: 0, a: 0.7882353}
-  - {r: 0.2976625, g: 1, b: 0, a: 0.7882353}
-  - {r: 0, g: 0.13428688, b: 1, a: 0.7882353}
-  - {r: 1, g: 0, b: 0.061194897, a: 0.7882353}

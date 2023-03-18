@@ -54,7 +54,7 @@ public class AudioController : MonoBehaviour
         s.source.Play();
     }
 
-    private void Stop(string name) {
+    public void Stop(string name) {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s == null) {
             Debug.LogError($"audio clip with this {name} dont exist");

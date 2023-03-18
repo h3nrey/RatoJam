@@ -44,6 +44,13 @@ public class PlayerBehaviour : MonoBehaviour
     [SerializeField] public float sprayAmountUsed;
     [SerializeField] public bool canUseSpray;
 
+    [Header("Splat")]
+    public List<Transform> splatCreaterList;
+    [SerializeField] public GameObject splatPrefab;
+    [SerializeField] public Transform splatHolder;
+    [SerializeField] public Color[] colors;
+
+
     [Header("Colectables")]
     [SerializeField] public int cheeseCount;
 
@@ -53,7 +60,8 @@ public class PlayerBehaviour : MonoBehaviour
     [Header("Reset")]
     [SerializeField] Transform checkPoint;
 
-    //Components
+    //Component
+    [Header("Components")]
     public Rigidbody2D rb;
     [SerializeField] Animator anim;
     [SerializeField] public ParticleSystem particles;
@@ -72,14 +80,16 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
     private void Update() {
-        HandleCoyoteJump();
-        SetAnimation();
-        CheckFacing();
+        if(!GameManager.Game.paused) {
+            HandleCoyoteJump();
+            SetAnimation();
+            CheckFacing();
+        }
     }
 
     void FixedUpdate() {
         vel = rb.velocity;
-        float targetSpeed = moveInput * moveSpeed;
+        float targetSpeed = moveInput * moveSpeed * Time.fixedDeltaTime;
         float speedDif = targetSpeed - rb.velocity.x;
         float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? acceleration : decceleration;
         float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, velPower) * Mathf.Sign(speedDif);
@@ -117,7 +127,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context) {
         if(context.started && isGrounded || coyoteTimeCounter > 0) {
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            rb.AddForce(Vector2.up * jumpForce * Time.fixedDeltaTime, ForceMode2D.Impulse);
             coyoteTimeCounter = 0;
         }
 
@@ -158,6 +168,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         if(context.canceled) {
             canUseSpray = false;
+            AudioController.audioInstance.Stop("spray");
         }
     }
 

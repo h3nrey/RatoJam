@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public static GameManager Game;
+    public bool paused;
+    private void Awake() {
+        Game = this;
+    }
+
+    public void ChangePausedState() {
+        paused = !paused;
+    }
     public void setTimeScale(int scale) {
         Time.timeScale = scale;
     }

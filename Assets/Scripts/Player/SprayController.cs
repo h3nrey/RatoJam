@@ -49,7 +49,7 @@ public class SprayController : MonoBehaviour
             }
             if (!particles.isEmitting && particles.isPlaying)
                 particles.Stop();
-            AudioController.audioInstance.Play("spray");
+
             particles.Play();
             sprayFuel -= sprayAmountUsed;
         } else if(!canUseSpray){
